@@ -70,7 +70,7 @@ module Heap_imp : Prioq_lib.Prioq_sig.PRIORITY_QUEUE with type 'a t = 'a tree = 
     insert_helper heap_list
 
   let rec sift_up (heap_list : 'a option list) (position : int) (comparator : ('a -> 'a -> bool)) : 'a option list =
-    if position = 0 then heap_list  (* If it's the root, no need to sift up further. *)
+    if position = 0 then heap_list
     else
       let parent_position = (position - 1) / 2 in
       let parent_node = List.nth heap_list parent_position in
