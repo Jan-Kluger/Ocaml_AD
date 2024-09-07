@@ -16,6 +16,8 @@ let heap =
       Node (6, Nil, Nil),
       Nil))
 
+let heap = Heap_imp.insert heap 7 int_comparator
+
 let heap = Heap_imp.delete_min heap int_comparator
 
 let heap_to_print = 

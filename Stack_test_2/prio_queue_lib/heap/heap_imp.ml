@@ -60,16 +60,46 @@ module Heap_imp : Prioq_lib.Prioq_sig.PRIORITY_QUEUE with type 'a t = 'a tree = 
         | Nil -> 
           check_right p_queue val1 left right
 
-  let insert (_ : 'a t) (_ : 'a) (_ : ('a -> 'a -> bool)) : 'a t = failwith "TODO"
+  let insert_into_list (heap_list : 'a option list) (element : 'a) : 'a option list =
+    let rec insert_helper heap_list =
+      match heap_list with
+      | [] -> [Some element]
+      | None :: rest -> Some element :: rest
+      | Some value :: rest -> Some value :: insert_helper rest
+    in
+    insert_helper heap_list
 
-  let build (elements : 'a list) (comp : ('a -> 'a -> bool)) : 'a t = 
-    List.fold_left (fun acc el -> insert acc el comp) Nil elements
+  let rec sift_up (heap_list : 'a option list) (position : int) (comparator : ('a -> 'a -> bool)) : 'a option list =
+    if position = 0 then heap_list  (* If it's the root, no need to sift up further. *)
+    else
+      let parent_position = (position - 1) / 2 in
+      let parent_node = List.nth heap_list parent_position in
+      let current_node = List.nth heap_list position in
+      match parent_node, current_node with
+      | Some parent_value, Some current_value ->
+        if comparator current_value parent_value then
+          let swapped_list = List.mapi (fun i x -> 
+            if i = position then Some parent_value
+            else if i = parent_position then Some current_value
+            else x
+          ) heap_list in
+          sift_up swapped_list parent_position comparator
+        else
+          heap_list
+      | _ -> heap_list
 
-  let sift_up (_ : 'a t) (_ : 'a ) (_ : ('a -> 'a -> bool)) : 'a t = failwith "TODO"
-    
-  let min (p_queue : 'a t) : 'a option = match p_queue with
-  | Nil -> None
-  | Node (value, _, _) -> Some value
+  let insert (p_queue : 'a t) (element : 'a) (comparator : ('a -> 'a -> bool)) : 'a t =
+    let p_queue_as_list = tree_to_list p_queue in
+    let updated_list = insert_into_list p_queue_as_list element in
+    let sifted_list = sift_up updated_list (List.length updated_list - 1) comparator in
+    list_to_tree sifted_list
+
+    let build (elements : 'a list) (comp : ('a -> 'a -> bool)) : 'a t = 
+      List.fold_left (fun acc el -> insert acc el comp) Nil elements
+      
+    let min (p_queue : 'a t) : 'a option = match p_queue with
+    | Nil -> None
+    | Node (value, _, _) -> Some value
 
   let delete_min (p_queue : 'a t) (comp : ('a -> 'a -> bool)) : 'a t option = 
     let (temp, new_list) = find_last_in_list (tree_to_list p_queue) in
