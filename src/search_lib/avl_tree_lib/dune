@@ -1,0 +1,4 @@
+(library
+ (name avl_tree_lib)
+ (libraries search_lib)
+ (modules avl_tree))

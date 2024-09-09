@@ -1,0 +1,3 @@
+(library
+ (name search_lib)
+ (modules search_sig))

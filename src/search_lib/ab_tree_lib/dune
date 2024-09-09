@@ -1,0 +1,4 @@
+(library
+ (name ab_tree_lib)
+ (libraries search_lib)
+ (modules ab_tree))

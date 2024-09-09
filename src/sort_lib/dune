@@ -1,0 +1,3 @@
+(library
+ (name sort_lib)
+ (modules sort_sig list_mergesort list_quicksort))
