@@ -21,7 +21,6 @@ let avl_tree = Avl_tree.insert avl_tree 4
 
 let () = print_endline (Avl_tree.toString avl_tree string_of_int)
 
-
 (* let heap = Heap_imp.insert heap 7 int_comparator
 
 let heap = Heap_imp.delete_min heap int_comparator *)
