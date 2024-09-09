@@ -17,17 +17,91 @@ module Avl_tree : Search_lib.Search_sig.SEARCH with type 'a t = 'a tree = struct
     | Nil -> 0
     | Node (_, _, l, r) -> 1 + max (height l) (height r)
 
-  let rec insert (avl_tree : 'a t) (element : 'a ) : 'a t = match avl_tree with
+
+  (* Single right rotation *)
+let rotate_right (node : 'a tree) : 'a tree = match node with
+| Node (z, _, Node (y, _, t1, t2), t3) ->
+    let new_left = Node (z, 1 + max (height t2) (height t3), t2, t3) in
+    Node (y, 1 + max (height t1) (height new_left), t1, new_left)
+| _ -> node
+
+(* Single left rotation *)
+let rotate_left (node : 'a tree) : 'a tree = match node with
+| Node (z, _, t1, Node (y, _, t2, t3)) ->
+    let new_right = Node (z, 1 + max (height t1) (height t2), t1, t2) in
+    Node (y, 1 + max (height new_right) (height t3), new_right, t3)
+| _ -> node
+
+(* Rebalance helper function *)
+let rebalance (node : 'a tree) : 'a tree =
+let balance = calculate_balance node in
+if balance > 1 then
+  (* Left-heavy subtree *)
+  match node with
+  | Node (_, _, l, _) ->
+      if calculate_balance l < 0 then
+        (* Left-Right case: Rotate left on the left subtree *)
+        let rotated_left = rotate_left l in
+        let new_node = match node with
+          | Node (v, _, _, r) -> Node (v, height node, rotated_left, r)
+          | _ -> failwith "Invalid node structure"
+        in
+        rotate_right new_node
+      else
+        (* Left-Left case: Single right rotation *)
+        rotate_right node
+  | _ -> node
+else if balance < -1 then
+  (* Right-heavy subtree *)
+  match node with
+  | Node (_, _, _, r) ->
+      if calculate_balance r > 0 then
+        (* Right-Left case: Rotate right on the right subtree *)
+        let rotated_right = rotate_right r in
+        let new_node = match node with
+          | Node (v, _, l, _) -> Node (v, height node, l, rotated_right)
+          | _ -> failwith "Invalid node structure"
+        in
+        rotate_left new_node
+      else
+        (* Right-Right case: Single left rotation *)
+        rotate_left node
+  | _ -> node
+else
+  (* Balanced node, no rotation needed *)
+  node
+
+(* Insert function with rebalance call *)
+let rec insert (avl_tree : 'a tree) (element : 'a) : 'a tree = match avl_tree with
+| Nil -> Node (element, 1, Nil, Nil)  (* New node with height 1 *)
+| Node (value, _, l, r) ->
+    if element < value then
+      let new_left = insert l element in
+      let new_node = Node (value, 1 + max (height new_left) (height r), new_left, r) in
+      rebalance new_node  (* Rebalance after insertion *)
+    else if element > value then
+      let new_right = insert r element in
+      let new_node = Node (value, 1 + max (height l) (height new_right), l, new_right) in
+      rebalance new_node  (* Rebalance after insertion *)
+    else
+      avl_tree  (* Element already exists, no changes *)
+
+  (* let rec insert (avl_tree : 'a t) (element : 'a ) : 'a t = match avl_tree with
   | Nil -> Node (element, 0, Nil, Nil)
   | Node (value, _, l, r) -> (
     if value > element then
       insert l element
     else
       insert r element
-    )
+    ) *)
 
   let remove (avl_tree : 'a t) (element : 'a ) : 'a t = failwith "TODO"
   let locate (avl_tree : 'a t) (element : 'a ) : 'a = failwith "TODO"
-  let toString  (avl_tree : 'a t) (to_string : ('a -> string)) : string = failwith "TODO"
+  let rec toString (avl_tree : 'a t) (to_string : ('a -> string)) : string = match avl_tree with
+  | Nil -> "Nil"
+  | Node (value, height, left, right) ->
+    let left_str = toString left to_string in
+    let right_str = toString right to_string in
+    "Node(" ^ to_string value ^ ", " ^ string_of_int height ^ ", " ^ left_str ^ ", " ^ right_str ^ ")"
   
 end
