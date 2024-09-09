@@ -3,6 +3,6 @@ module type SEARCH = sig
 
   val insert : 'a t -> 'a -> 'a t
   val remove : 'a t -> 'a -> 'a t
-  val locate : 'a t -> 'a -> 'a
+  val locate : 'a t -> 'a -> 'a option
   val toString : 'a t -> ('a -> string) -> string
 end
