@@ -7,4 +7,8 @@
  stack_lib queue_lib sa_lib sort_lib
 
  ; p_queue libraries (since there are multiple of them)
- heap_imp_lib list_priority_queue_lib))
+ heap_imp_lib list_priority_queue_lib
+ 
+ ; sear libraries
+ avl_tree_lib
+ ))
