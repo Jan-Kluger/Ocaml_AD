@@ -1,3 +1,0 @@
-(library
- (name prioq_lib)
- (modules prioq_sig))

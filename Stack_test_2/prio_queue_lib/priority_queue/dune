@@ -1,5 +1,0 @@
-(library
- (name list_priority_queue_lib)
- (modules list_prioq)
- (libraries prioq_lib)
-)
