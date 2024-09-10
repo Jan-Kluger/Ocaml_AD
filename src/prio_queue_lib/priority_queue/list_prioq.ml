@@ -5,17 +5,17 @@ type 'a tree =
 module List_prioq : Prioq_lib.Prioq_sig.PRIORITY_QUEUE with type 'a t = 'a tree = struct
   type 'a t = 'a tree
 
-  let rec insert (p_queue : 'a t) (element : 'a) (comp : ('a -> 'a -> bool)) : 'a t =
+  let rec insert (p_queue : 'a t) (element : 'a) ~(comp : ('a -> 'a -> bool)) : 'a t =
     match p_queue with
     | Nil -> Node (element, Nil, Nil)
     | Node (value, left, right) -> 
       if element < value then
-        Node (value, (insert left element comp), right)
+        Node (value, (insert left element ~comp:comp), right)
       else
-        Node (value, left, (insert right element comp))
+        Node (value, left, (insert right element ~comp:comp))
 
   let build (elements : 'a list) (comp : ('a -> 'a -> bool)) : 'a t = 
-    List.fold_left (fun tree element -> insert tree element comp) Nil elements
+    List.fold_left (fun tree element -> insert tree element ~comp:comp) Nil elements
 
   let min (p_queue : 'a t) : 'a option = match p_queue with
   | Nil -> None

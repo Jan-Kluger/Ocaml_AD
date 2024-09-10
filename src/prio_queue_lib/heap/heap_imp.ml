@@ -88,14 +88,14 @@ module Heap_imp : Prioq_lib.Prioq_sig.PRIORITY_QUEUE with type 'a t = 'a tree = 
           heap_list
       | _ -> heap_list
 
-  let insert (p_queue : 'a t) (element : 'a) (comparator : ('a -> 'a -> bool)) : 'a t =
+  let insert (p_queue : 'a t) (element : 'a) ~(comp : ('a -> 'a -> bool)) : 'a t =
     let p_queue_as_list = tree_to_list p_queue in
     let updated_list = insert_into_list p_queue_as_list element in
-    let sifted_list = sift_up updated_list (List.length updated_list - 1) comparator in
+    let sifted_list = sift_up updated_list (List.length updated_list - 1) comp in
     list_to_tree sifted_list
 
     let build (elements : 'a list) (comp : ('a -> 'a -> bool)) : 'a t = 
-      List.fold_left (fun acc el -> insert acc el comp) Nil elements
+      List.fold_left (fun acc el -> insert acc el ~comp:comp) Nil elements
       
     let min (p_queue : 'a t) : 'a option = match p_queue with
     | Nil -> None
