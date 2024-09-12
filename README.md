@@ -1,5 +1,5 @@
 # Algorithms & Data structures in Ocaml
-Practicing Algorithms and datastructures in OCaml. 
+Practicing Algorithms and datastructures in purely functional OCaml. 
 
 This project contains
 - Stacks
