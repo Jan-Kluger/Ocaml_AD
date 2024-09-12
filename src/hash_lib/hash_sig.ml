@@ -6,7 +6,7 @@ module type HASH_SIG = sig
     val put : hashtable:(('a, 'b) t) -> ('a * 'b) -> hash_function:('a -> int) -> (('a, 'b) t)
   
     (* Retrieve the value associated with the key *)
-    val get : hashtable:(('a, 'b) t) -> ('a * 'b) -> hash_function:('a -> int) -> 'b option
+    val get : hashtable:(('a, 'b) t) -> 'a -> hash_function:('a -> int) -> 'b option
   
     (* Remove a key-value pair from the hash table *)
     val remove : hashtable:(('a, 'b) t) -> 'a -> hash_function:('a -> int) -> (('a, 'b) t)
