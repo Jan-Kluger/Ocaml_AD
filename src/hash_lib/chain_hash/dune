@@ -1,0 +1,4 @@
+(library
+ (name chain_hash)
+ (libraries hash_lib)
+ (modules chain_hash))

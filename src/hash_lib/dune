@@ -1,0 +1,3 @@
+(library
+ (name hash_lib)
+ (modules hash_sig))
