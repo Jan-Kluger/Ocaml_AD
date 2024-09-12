@@ -1,2 +1,10 @@
 # Algorithms & Data structures in Ocaml
-practice Algorithms and datastructures in ocaml
+Practicing Algorithms and datastructures in OCaml. 
+
+This project contains
+- Stacks
+- Queues
+- Binary Heap
+- Avl Trees
+- ab Trees
+- Hashing with chaining
