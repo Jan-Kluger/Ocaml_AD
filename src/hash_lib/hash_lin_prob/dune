@@ -1,0 +1,4 @@
+(library
+ (name hash_lin_prob)
+ (modules hash_lin_prob)
+ (libraries hash_lib))
