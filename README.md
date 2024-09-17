@@ -10,3 +10,5 @@ This project contains
 - Avl Trees
 - ab Trees
 - Hashing with chaining
+- Hashing with linear probing
+- Graphs
