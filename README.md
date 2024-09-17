@@ -12,3 +12,10 @@ This project contains
 - Hashing with chaining
 - Hashing with linear probing
 - Graphs
+Working on:
+- BFS
+- DFS
+- Dijstra
+- Bellmand ford
+- Prim
+- ...
