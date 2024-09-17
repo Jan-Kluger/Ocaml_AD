@@ -1,0 +1,4 @@
+(library
+ (name graph_lib)
+ (libraries hash_lib chain_hash_lib)
+ (modules graph))
