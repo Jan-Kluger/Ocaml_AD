@@ -9,6 +9,12 @@
  ; p_queue libraries (since there are multiple of them)
  heap_imp_lib list_priority_queue_lib
  
- ; sear libraries
+ ; search libraries
  avl_tree_lib
+
+ ; hash libraries
+ chain_hash_lib
+
+ ; graph libraries
+ graph_lib
  ))
