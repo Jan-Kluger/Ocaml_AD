@@ -1,4 +1,4 @@
-module ChainHash : Hash_lib.Hash_sig.HASH_SIG with type ('a, 'b) t = ('a * 'b) list array = struct
+module CHAIN_HASH : Hash_lib.Hash_sig.HASH_SIG with type ('a, 'b) t = ('a * 'b) list array = struct
   type ('a, 'b) t = ('a * 'b) list array
 
   let put ~(hashtable: ('a, 'b) t) ((key: 'a), (value: 'b)) ~(hash_function: 'a -> int) : ('a, 'b) t =
