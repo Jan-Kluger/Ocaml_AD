@@ -12,11 +12,14 @@ This project contains
 - Hashing with chaining
 - Hashing with linear probing
 - Graphs
-
-Working on:
 - BFS
 - DFS
-- Dijstra
-- Bellmand ford
+
+Working on:
+- Dijkstras
+- Bellman-Ford
+- Floyd-Warshall
+- Johnson-Algorithm
+- Kruskal
 - Prim
 - ...
