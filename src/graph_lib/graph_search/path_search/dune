@@ -1,0 +1,4 @@
+(library
+ (name path_search_lib)
+ (libraries graph_search_sig_lib graph_lib)
+ (modules bfs dfs))
