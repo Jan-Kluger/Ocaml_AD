@@ -1,0 +1,4 @@
+(library
+ (name dijkstras_lib)
+ (libraries graph_lib chain_hash_lib heap_imp_lib)
+ (modules dijkstras))
