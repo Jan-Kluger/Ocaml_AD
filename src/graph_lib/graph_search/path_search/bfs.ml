@@ -31,7 +31,6 @@ module BFS (HashTable: Hash_lib.Hash_sig.HASH_SIG with type ('a, 'b) t = ('a * '
           match HashTable.get ~hashtable:graph.adj_list current ~hash_function with
           | None -> bfs_loop visited parent_map  (* No neighbors, continue BFS *)
           | Some neighbors ->
-            (* Explore all neighbors *)
             let visited, parent_map =
               List.fold_left (fun (visited, parent_map) neighbor ->
                 if HashTable.contains ~hashtable:visited neighbor ~hash_function then
