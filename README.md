@@ -22,4 +22,3 @@ Working on:
 - Johnson-Algorithm
 - Kruskal
 - Prim
-- ...
