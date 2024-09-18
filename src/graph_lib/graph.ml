@@ -1,4 +1,4 @@
-module Graph (HashTable: Hash_lib.Hash_sig.HASH_SIG) = struct
+module GRAPH (HashTable: Hash_lib.Hash_sig.HASH_SIG) = struct
   type 'a vertex = 'a
   type weight = float
   type 'a neighbors = 'a vertex list
