@@ -77,7 +77,7 @@ print_endline (List_mergesort.toString sorted_list string_of_int) *)
 
 open Graph_lib.Graph
 
-module ChainHashGraph = Graph(Chain_hash_lib.Chain_hash.CHAIN_HASH)
+module ChainHashGraph = GRAPH(Chain_hash_lib.Chain_hash.CHAIN_HASH)
 
 let hash_function x = x  (* Simple hash function for integers *)
 
@@ -93,8 +93,8 @@ let weight_opt = ChainHashGraph.find_edge ~graph:g 1 2 ~hash_function
 let () = match weight_opt with
   | Some w -> Printf.printf "Edge 1 -> 2 has weight %f\n" w
   | None -> Printf.printf "Edge 1 -> 2 does not exist\n"
-(* 
-  let string_to_print = ChainHashGraph.to_graphviz g ~hash_function
+
+  let string_to_print = ChainHashGraph.to_graphviz ~graph:g ~hash_function ~vertex_to_string:string_of_int
 
 (* Print the GraphViz representation *)
-let () = print_endline (string_to_print) *)
+let () = print_endline (string_to_print)
