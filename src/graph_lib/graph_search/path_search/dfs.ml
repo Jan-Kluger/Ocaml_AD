@@ -32,7 +32,7 @@ module DFS (HashTable: Hash_lib.Hash_sig.HASH_SIG with type ('a, 'b) t = ('a * '
           | None -> dfs_loop visited parent_map  (* No neighbors, continue DFS *)
           | Some neighbors ->
             let visited, parent_map =
-              List.fold_left (fun (visited, parent_map) neighbor ->
+              List.fold_left (fun (visited, parent_map) (neighbor, _) ->  (* Ignore weight with `_` *)
                 if HashTable.contains ~hashtable:visited neighbor ~hash_function then
                   (visited, parent_map)  (* Already visited *)
                 else
