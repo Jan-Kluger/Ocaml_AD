@@ -1,7 +1,7 @@
 module GRAPH (HashTable: Hash_lib.Hash_sig.HASH_SIG) = struct
   type 'a vertex = 'a
   type weight = float
-  type 'a neighbors = 'a vertex list
+  type 'a neighbors = ('a vertex * weight) list  (* added wights to neigbors, howver this means that if i want to do a dag all weights should be inserted as 1, maybe ill make a seperate module for dag *)
 
   (* Use the type 't from the hash table signature *)
   type 'a graph = {
@@ -22,7 +22,7 @@ module GRAPH (HashTable: Hash_lib.Hash_sig.HASH_SIG) = struct
       | Some lst -> lst
       | None -> []
     in
-    let updated_neighbors = if List.mem v2 neighbors then neighbors else v2 :: neighbors in
+    let updated_neighbors = if List.exists (fun (n, _) -> n = v2) neighbors then neighbors else (v2, weight) :: neighbors in (* also add weight*)
     let updated_adj_list = HashTable.put ~hashtable:graph.adj_list (v1, updated_neighbors) ~hash_function in
     let edge_key = (v1, v2) in
     let updated_edges = HashTable.put ~hashtable:graph.edges (edge_key, weight) ~hash_function:(fun (x, y) -> hash_function x + hash_function y) in
@@ -36,7 +36,7 @@ module GRAPH (HashTable: Hash_lib.Hash_sig.HASH_SIG) = struct
   (* Remove an edge between v1 and v2 *)
   let remove_edge ~(graph: 'a graph) (v1: 'a vertex) (v2: 'a vertex) ~(hash_function: 'a vertex -> int) : 'a graph =
     let neighbors = match HashTable.get ~hashtable:graph.adj_list v1 ~hash_function with
-      | Some lst -> List.filter ((<>) v2) lst
+      | Some lst -> List.filter (fun (n, _) -> n <> v2) lst
       | None -> []
     in
     let updated_adj_list = HashTable.put ~hashtable:graph.adj_list (v1, neighbors) ~hash_function in
@@ -50,7 +50,7 @@ module GRAPH (HashTable: Hash_lib.Hash_sig.HASH_SIG) = struct
     for i = 0 to HashTable.size graph.adj_list - 1 do
       match HashTable.get ~hashtable:graph.adj_list i ~hash_function with
       | Some neighbors ->
-        List.iter (fun n ->
+        List.iter (fun (n, _) -> (* iterate list, we now also need to include empty weight in argument*)
           match HashTable.get ~hashtable:graph.edges (i, n) ~hash_function:(fun (x, y) -> hash_function x + hash_function y) with
           | Some weight -> edges := !edges @ [Printf.sprintf "  %s -> %s [label=\"%f\"];" (vertex_to_string i) (vertex_to_string n) weight]
           | None -> ()
