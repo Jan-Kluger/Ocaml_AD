@@ -23,7 +23,7 @@ Working on:
 - Kruskal
 - Prim
 
-Project tree:
+# Program structure:
 ```
 └── Ocaml_AD/
     └── src/
@@ -79,5 +79,3 @@ Project tree:
             └── heap/
                 ├── heap_imp.ml
 ```
-
-test
