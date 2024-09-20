@@ -17,12 +17,6 @@ This project contains
 - Dijkstras
 - Bellman-Ford
 
-Working on:
-- Floyd-Warshall
-- Johnson-Algorithm
-- Kruskal
-- Prim
-
 # Program structure:
 ```
 └── Ocaml_AD/
