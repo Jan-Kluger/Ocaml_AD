@@ -1,9 +1,11 @@
 module GRAPH (HashTable: Hash_lib.Hash_sig.HASH_SIG) = struct
+  (* This definition of grpahs was taking from the lecture slides and attempted to be implemented in OCaml *)
   type 'a vertex = 'a
   type weight = float
   type 'a neighbors = ('a vertex * weight) list  (* added wights to neigbors, howver this means that if i want to do a dag all weights should be inserted as 1, maybe ill make a seperate module for dag *)
 
   (* Use the type 't from the hash table signature *)
+  (* hash table for adj list and edge weights (this could be done in one?) *)
   type 'a graph = {
     adj_list: ('a vertex, 'a neighbors) HashTable.t;
     edges: (('a vertex * 'a vertex), weight) HashTable.t;
@@ -11,9 +13,11 @@ module GRAPH (HashTable: Hash_lib.Hash_sig.HASH_SIG) = struct
 
   (* Add a vertex to the graph *)
   let add_vertex ~(graph: 'a graph) (v: 'a vertex) ~(hash_function: 'a vertex -> int) : 'a graph =
+    (* If ghrpah already contains vertex return since we cant have the same vertex twice *)
     if HashTable.contains ~hashtable:graph.adj_list v ~hash_function then
       graph
     else
+      (* Update the adjacency list with the new vertex *)
       { graph with adj_list = HashTable.put ~hashtable:graph.adj_list (v, []) ~hash_function }
 
   (* Add an edge between v1 and v2 with a given weight *)
@@ -35,6 +39,7 @@ module GRAPH (HashTable: Hash_lib.Hash_sig.HASH_SIG) = struct
 
   (* Remove an edge between v1 and v2 *)
   let remove_edge ~(graph: 'a graph) (v1: 'a vertex) (v2: 'a vertex) ~(hash_function: 'a vertex -> int) : 'a graph =
+    (* Get current neigbors of v1*)
     let neighbors = match HashTable.get ~hashtable:graph.adj_list v1 ~hash_function with
       | Some lst -> List.filter (fun (n, _) -> n <> v2) lst
       | None -> []

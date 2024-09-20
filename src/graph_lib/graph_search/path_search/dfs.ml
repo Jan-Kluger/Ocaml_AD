@@ -6,6 +6,8 @@ module DFS (HashTable: Hash_lib.Hash_sig.HASH_SIG with type ('a, 'b) t = ('a * '
 
   type 'a graph = 'a ChainHashGraph.graph
 
+  (* For more extensive comments see BFS, basically the same thing but here we use a stack *)
+
   let rec reconstruct_path parent_map current path hash_function =
     match HashTable.get ~hashtable:parent_map current ~hash_function with
     | None -> List.rev (current :: path)
