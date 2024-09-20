@@ -19,10 +19,11 @@ module Dijkstra
   type 'a graph = 'a ChainHashGraph.graph
 
   (* Helper function to extract the shortest path from the parent map, analgous (i think) to the reconstruct emthod from BFS and DFS *)
-  let rec reconstruct_path parent_map current path =
+  
+  (* let rec reconstruct_path parent_map current path =
     match HashTable.get ~hashtable:parent_map current ~hash_function:(fun x -> Hashtbl.hash x) with
     | None -> List.rev (current :: path)
-    | Some parent -> reconstruct_path parent_map parent (current :: path)
+    | Some parent -> reconstruct_path parent_map parent (current :: path) *)
 
   (* Dijkstra's algorithm implementation *)
   let shortest_paths ~(graph: 'a graph) ~(start: 'a) ~(hash_function: 'a -> int) =
