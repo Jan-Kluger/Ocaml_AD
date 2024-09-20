@@ -1,0 +1,4 @@
+(library
+ (name all_min_graph_lib)
+ (libraries graph_lib chain_hash_lib)
+ (modules bellman_ford))
