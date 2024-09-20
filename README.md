@@ -14,10 +14,10 @@ This project contains
 - Graphs
 - BFS
 - DFS
-
-Working on:
 - Dijkstras
 - Bellman-Ford
+
+Working on:
 - Floyd-Warshall
 - Johnson-Algorithm
 - Kruskal
