@@ -22,10 +22,12 @@ module GRAPH (HashTable: Hash_lib.Hash_sig.HASH_SIG) = struct
 
   (* Add an edge between v1 and v2 with a given weight *)
   let add_edge ~(graph: 'a graph) (v1: 'a vertex) (v2: 'a vertex) ~(weight: weight) ~(hash_function: 'a vertex -> int) : 'a graph =
+    (* let neighbors be either an empty list if bide has no neighbors, or fetch old neigbors *)
     let neighbors = match HashTable.get ~hashtable:graph.adj_list v1 ~hash_function with
       | Some lst -> lst
       | None -> []
     in
+    (* check if list already has neighbors, if do nothing, else add edge *)
     let updated_neighbors = if List.exists (fun (n, _) -> n = v2) neighbors then neighbors else (v2, weight) :: neighbors in (* also add weight*)
     let updated_adj_list = HashTable.put ~hashtable:graph.adj_list (v1, updated_neighbors) ~hash_function in
     let edge_key = (v1, v2) in
@@ -50,6 +52,7 @@ module GRAPH (HashTable: Hash_lib.Hash_sig.HASH_SIG) = struct
     { adj_list = updated_adj_list; edges = updated_edges }
 
   (* Convert the graph to GraphViz DOT format with edge weights *)
+  (* Done by Chat-GPT for testing *)
   let to_graphviz ~(graph: 'a graph) ~(hash_function: 'a vertex -> int) ~(vertex_to_string: 'a vertex -> string) : string =
     let edges = ref [] in
     for i = 0 to HashTable.size graph.adj_list - 1 do
